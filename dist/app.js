@@ -68,4 +68,23 @@ if (slideshow) {
   startAutoplay();
 }
 
+const stickyTickets = document.querySelector('.sticky-tickets');
+const updateStickyTickets = () => {
+  stickyTickets?.classList.toggle('is-visible', window.scrollY > Math.min(520, window.innerHeight * 0.62));
+};
+updateStickyTickets();
+window.addEventListener('scroll', updateStickyTickets, { passive: true });
+
+const alertForm = document.querySelector('[data-alert-form]');
+alertForm?.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const email = new FormData(alertForm).get('email')?.toString().trim();
+  if (!email) return;
+  const subject = encodeURIComponent('Join Call Me Manny tour alerts');
+  const body = encodeURIComponent(`Please add ${email} to Call Me Manny tour alerts.\n\nThe city I want Manny to visit is: `);
+  const status = alertForm.querySelector('[data-form-status]');
+  if (status) status.textContent = 'Your email app is opening—add your city, then send.';
+  window.location.href = `mailto:callmannymgmt@gmail.com?subject=${subject}&body=${body}`;
+});
+
 document.getElementById('year').textContent = new Date().getFullYear();
