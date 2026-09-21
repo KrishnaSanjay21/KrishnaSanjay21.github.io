@@ -46,25 +46,8 @@ if (tilt && !reducedMotion && window.matchMedia('(pointer: fine)').matches) {
 const slideshow = document.querySelector('[data-slideshow]');
 if (slideshow) {
   const slides = [...slideshow.querySelectorAll('[data-slide]')];
-  const dots = [...slideshow.querySelectorAll('[data-slide-to]')];
-  const status = slideshow.querySelector('[data-slide-status]');
-  const toggle = slideshow.querySelector('[data-slide-toggle]');
   let currentSlide = 0;
-  let autoplayEnabled = !reducedMotion;
   let autoplayTimer;
-
-  const stopAutoplay = () => window.clearInterval(autoplayTimer);
-  const startAutoplay = () => {
-    stopAutoplay();
-    if (!autoplayEnabled || document.hidden || slideshow.matches(':hover') || slideshow.contains(document.activeElement)) return;
-    autoplayTimer = window.setInterval(() => showSlide(currentSlide + 1), 5000);
-  };
-
-  const updateToggle = () => {
-    if (!toggle) return;
-    toggle.textContent = autoplayEnabled ? 'Ⅱ' : '▶';
-    toggle.setAttribute('aria-label', autoplayEnabled ? 'Pause automatic slideshow' : 'Start automatic slideshow');
-  };
 
   const showSlide = (index) => {
     currentSlide = (index + slides.length) % slides.length;
@@ -73,42 +56,15 @@ if (slideshow) {
       slide.hidden = !active;
       slide.classList.toggle('is-active', active);
     });
-    dots.forEach((dot, dotIndex) => {
-      const active = dotIndex === currentSlide;
-      dot.classList.toggle('is-active', active);
-      if (active) dot.setAttribute('aria-current', 'true');
-      else dot.removeAttribute('aria-current');
-    });
-    if (status) status.textContent = `${String(currentSlide + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
   };
 
-  slideshow.querySelector('[data-slide-prev]')?.addEventListener('click', () => showSlide(currentSlide - 1));
-  slideshow.querySelector('[data-slide-next]')?.addEventListener('click', () => showSlide(currentSlide + 1));
-  dots.forEach((dot) => dot.addEventListener('click', () => showSlide(Number(dot.dataset.slideTo))));
-  toggle?.addEventListener('click', () => {
-    autoplayEnabled = !autoplayEnabled;
-    updateToggle();
-    startAutoplay();
-  });
-  slideshow.addEventListener('keydown', (event) => {
-    if (event.key === 'ArrowLeft') showSlide(currentSlide - 1);
-    if (event.key === 'ArrowRight') showSlide(currentSlide + 1);
-  });
+  const startAutoplay = () => {
+    window.clearInterval(autoplayTimer);
+    if (document.hidden || slides.length < 2) return;
+    autoplayTimer = window.setInterval(() => showSlide(currentSlide + 1), 4500);
+  };
 
-  let touchStartX = 0;
-  slideshow.addEventListener('touchstart', (event) => { touchStartX = event.changedTouches[0].clientX; }, { passive: true });
-  slideshow.addEventListener('touchend', (event) => {
-    const distance = event.changedTouches[0].clientX - touchStartX;
-    if (Math.abs(distance) < 45) return;
-    showSlide(currentSlide + (distance < 0 ? 1 : -1));
-  }, { passive: true });
-
-  slideshow.addEventListener('mouseenter', stopAutoplay);
-  slideshow.addEventListener('mouseleave', startAutoplay);
-  slideshow.addEventListener('focusin', stopAutoplay);
-  slideshow.addEventListener('focusout', () => window.setTimeout(startAutoplay, 0));
   document.addEventListener('visibilitychange', startAutoplay);
-  updateToggle();
   startAutoplay();
 }
 
