@@ -48,7 +48,23 @@ if (slideshow) {
   const slides = [...slideshow.querySelectorAll('[data-slide]')];
   const dots = [...slideshow.querySelectorAll('[data-slide-to]')];
   const status = slideshow.querySelector('[data-slide-status]');
+  const toggle = slideshow.querySelector('[data-slide-toggle]');
   let currentSlide = 0;
+  let autoplayEnabled = !reducedMotion;
+  let autoplayTimer;
+
+  const stopAutoplay = () => window.clearInterval(autoplayTimer);
+  const startAutoplay = () => {
+    stopAutoplay();
+    if (!autoplayEnabled || document.hidden || slideshow.matches(':hover') || slideshow.contains(document.activeElement)) return;
+    autoplayTimer = window.setInterval(() => showSlide(currentSlide + 1), 5000);
+  };
+
+  const updateToggle = () => {
+    if (!toggle) return;
+    toggle.textContent = autoplayEnabled ? 'Ⅱ' : '▶';
+    toggle.setAttribute('aria-label', autoplayEnabled ? 'Pause automatic slideshow' : 'Start automatic slideshow');
+  };
 
   const showSlide = (index) => {
     currentSlide = (index + slides.length) % slides.length;
@@ -69,6 +85,11 @@ if (slideshow) {
   slideshow.querySelector('[data-slide-prev]')?.addEventListener('click', () => showSlide(currentSlide - 1));
   slideshow.querySelector('[data-slide-next]')?.addEventListener('click', () => showSlide(currentSlide + 1));
   dots.forEach((dot) => dot.addEventListener('click', () => showSlide(Number(dot.dataset.slideTo))));
+  toggle?.addEventListener('click', () => {
+    autoplayEnabled = !autoplayEnabled;
+    updateToggle();
+    startAutoplay();
+  });
   slideshow.addEventListener('keydown', (event) => {
     if (event.key === 'ArrowLeft') showSlide(currentSlide - 1);
     if (event.key === 'ArrowRight') showSlide(currentSlide + 1);
@@ -81,6 +102,14 @@ if (slideshow) {
     if (Math.abs(distance) < 45) return;
     showSlide(currentSlide + (distance < 0 ? 1 : -1));
   }, { passive: true });
+
+  slideshow.addEventListener('mouseenter', stopAutoplay);
+  slideshow.addEventListener('mouseleave', startAutoplay);
+  slideshow.addEventListener('focusin', stopAutoplay);
+  slideshow.addEventListener('focusout', () => window.setTimeout(startAutoplay, 0));
+  document.addEventListener('visibilitychange', startAutoplay);
+  updateToggle();
+  startAutoplay();
 }
 
 document.getElementById('year').textContent = new Date().getFullYear();
