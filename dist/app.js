@@ -43,4 +43,44 @@ if (tilt && !reducedMotion && window.matchMedia('(pointer: fine)').matches) {
   tilt.addEventListener('pointerleave', () => { tilt.style.transform = ''; });
 }
 
+const slideshow = document.querySelector('[data-slideshow]');
+if (slideshow) {
+  const slides = [...slideshow.querySelectorAll('[data-slide]')];
+  const dots = [...slideshow.querySelectorAll('[data-slide-to]')];
+  const status = slideshow.querySelector('[data-slide-status]');
+  let currentSlide = 0;
+
+  const showSlide = (index) => {
+    currentSlide = (index + slides.length) % slides.length;
+    slides.forEach((slide, slideIndex) => {
+      const active = slideIndex === currentSlide;
+      slide.hidden = !active;
+      slide.classList.toggle('is-active', active);
+    });
+    dots.forEach((dot, dotIndex) => {
+      const active = dotIndex === currentSlide;
+      dot.classList.toggle('is-active', active);
+      if (active) dot.setAttribute('aria-current', 'true');
+      else dot.removeAttribute('aria-current');
+    });
+    if (status) status.textContent = `${String(currentSlide + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
+  };
+
+  slideshow.querySelector('[data-slide-prev]')?.addEventListener('click', () => showSlide(currentSlide - 1));
+  slideshow.querySelector('[data-slide-next]')?.addEventListener('click', () => showSlide(currentSlide + 1));
+  dots.forEach((dot) => dot.addEventListener('click', () => showSlide(Number(dot.dataset.slideTo))));
+  slideshow.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowLeft') showSlide(currentSlide - 1);
+    if (event.key === 'ArrowRight') showSlide(currentSlide + 1);
+  });
+
+  let touchStartX = 0;
+  slideshow.addEventListener('touchstart', (event) => { touchStartX = event.changedTouches[0].clientX; }, { passive: true });
+  slideshow.addEventListener('touchend', (event) => {
+    const distance = event.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(distance) < 45) return;
+    showSlide(currentSlide + (distance < 0 ? 1 : -1));
+  }, { passive: true });
+}
+
 document.getElementById('year').textContent = new Date().getFullYear();

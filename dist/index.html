@@ -60,17 +60,26 @@
           <div><p class="eyebrow dark"><span></span> Off-script</p><p class="moments-kicker">Two portraits. Absolutely no evidence of a serious man.</p></div>
           <h2 id="moments-title">Manny in his<br /><em>natural habitat.</em></h2>
         </div>
-        <div class="moments-gallery">
-          <figure class="moment-card moment-card-crown" data-reveal>
-            <div class="moment-photo"><img src="/call-me-manny.jpeg" width="1206" height="1637" loading="lazy" alt="Call Me Manny smiling in a crown against a bright blue backdrop" /></div>
-            <span class="moment-sticker sticker-acid" aria-hidden="true">Your mum used<br />your full name.</span>
-            <figcaption><strong>Act natural.</strong><span>When the crown fits—but the family group chat keeps you humble.</span></figcaption>
-          </figure>
-          <figure class="moment-card moment-card-point" data-reveal>
-            <div class="moment-photo"><img src="/manny-facebook.jpg" width="720" height="1080" loading="lazy" alt="Call Me Manny grinning and pointing toward the camera against a yellow backdrop" /></div>
-            <span class="moment-sticker sticker-violet" aria-hidden="true">“I will not put<br />this in my set.”</span>
-            <figcaption><strong>POV: he put it in the set.</strong><span>One microphone. Several family secrets. Zero regrets.</span></figcaption>
-          </figure>
+        <div class="photo-show" data-slideshow data-reveal aria-roledescription="carousel" aria-label="Call Me Manny photo slideshow">
+          <div class="photo-stage" aria-live="polite">
+            <article class="photo-slide is-active" data-slide role="group" aria-roledescription="slide" aria-label="1 of 2">
+              <div class="slide-photo"><img src="/call-me-manny.jpeg" width="1206" height="1637" loading="lazy" alt="Call Me Manny smiling in a crown against a bright blue backdrop" /></div>
+              <div class="slide-caption"><span>01 · Royal behavior</span><strong>Act natural.</strong><p>When the crown fits—but the family group chat keeps you humble.</p><em>“Your mum used your full name.”</em></div>
+            </article>
+            <article class="photo-slide" data-slide role="group" aria-roledescription="slide" aria-label="2 of 2" hidden>
+              <div class="slide-photo"><img src="/manny-facebook.jpg" width="720" height="1080" loading="lazy" alt="Call Me Manny grinning and pointing toward the camera against a yellow backdrop" /></div>
+              <div class="slide-caption"><span>02 · Evidence</span><strong>POV: he put it in the set.</strong><p>One microphone. Several family secrets. Zero regrets.</p><em>“I will not put this in my set.”</em></div>
+            </article>
+          </div>
+          <div class="photo-controls">
+            <button type="button" class="slide-arrow" data-slide-prev aria-label="Show previous photo">←</button>
+            <div class="slide-dots" aria-label="Choose a photo">
+              <button type="button" class="is-active" data-slide-to="0" aria-label="Show photo 1" aria-current="true"></button>
+              <button type="button" data-slide-to="1" aria-label="Show photo 2"></button>
+            </div>
+            <span class="slide-status" data-slide-status aria-hidden="true">01 / 02</span>
+            <button type="button" class="slide-arrow" data-slide-next aria-label="Show next photo">→</button>
+          </div>
         </div>
       </section>
     </main>
