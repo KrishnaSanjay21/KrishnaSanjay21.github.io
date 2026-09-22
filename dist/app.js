@@ -69,8 +69,11 @@ if (slideshow) {
 }
 
 const stickyTickets = document.querySelector('.sticky-tickets');
+const youtubeSection = document.querySelector('.youtube-section');
 const updateStickyTickets = () => {
-  stickyTickets?.classList.toggle('is-visible', window.scrollY > Math.min(520, window.innerHeight * 0.62));
+  const videoRect = youtubeSection?.getBoundingClientRect();
+  const videoInView = videoRect && videoRect.top < window.innerHeight - 96 && videoRect.bottom > 96;
+  stickyTickets?.classList.toggle('is-visible', window.scrollY > Math.min(520, window.innerHeight * 0.62) && !videoInView);
 };
 updateStickyTickets();
 window.addEventListener('scroll', updateStickyTickets, { passive: true });
