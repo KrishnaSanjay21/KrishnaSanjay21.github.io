@@ -23,6 +23,7 @@ footer{display:grid;grid-template-columns:auto 1fr auto;align-items:end;gap:3rem
 .site-header.solid{background:rgba(8,7,19,.94);border-color:rgba(255,255,255,.09);backdrop-filter:blur(18px)}
 .main-nav>a.active::after{right:0!important}.main-nav>a.active{color:var(--acid)}
 .moments-section{width:var(--page);margin:0 auto;padding:clamp(6rem,10vw,10rem) 0}
+.moments-before-alert{padding-bottom:clamp(3rem,5vw,5rem)}
 .moments-heading{display:grid;grid-template-columns:.72fr 1.28fr;gap:5vw;align-items:end;margin-bottom:4rem}
 .moments-heading h2{margin:0;font-family:var(--display);font-size:clamp(3.8rem,7.3vw,7.4rem);line-height:.84;letter-spacing:-.075em;text-transform:uppercase}
 .moments-heading h2 em{color:var(--violet);font-style:normal}.moments-heading .eyebrow{margin-bottom:1rem}
