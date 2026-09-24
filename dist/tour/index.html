@@ -5,13 +5,29 @@
     <meta name="description" content="Upcoming Call Me Manny live comedy dates, venues, showtimes, and official tickets." />
     <link rel="canonical" href="https://call-me-manny-live.vaddikrishnasanjay.chatgpt.site/tour/" /><title>Tour & Tickets — Call Me Manny</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" /><link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" /><link rel="stylesheet" href="/styles.css" />
+    <link rel="preconnect" href="https://tiles.openfreemap.org" /><link rel="stylesheet" href="https://unpkg.com/maplibre-gl@6.11.2/dist/maplibre-gl.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" /><link rel="stylesheet" href="/styles.css?v=political-map-16" />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to shows</a>
     <header class="site-header solid" data-header><a class="wordmark" href="/" aria-label="Call Me Manny home"><span>CALL ME</span><strong>MANNY</strong></a><button class="menu-button" type="button" aria-expanded="false" aria-controls="main-nav"><span class="sr-only">Toggle navigation</span><span></span><span></span></button><nav id="main-nav" class="main-nav" aria-label="Main navigation"><a class="active" aria-current="page" href="/tour/">Tour</a><a href="/#story">Story</a><a href="/#follow">Follow</a><a class="nav-cta" href="#shows">Tickets <span aria-hidden="true">↓</span></a></nav></header>
     <main id="main" class="tour-page">
       <section class="subpage-hero tour-hero" aria-labelledby="page-title"><div class="subpage-copy" data-reveal><p class="eyebrow"><span></span> Europe · 2026</p><h1 id="page-title">Live<br /><em>dates.</em></h1><p>All currently announced Call Me Manny performances. Official ticket links are added as soon as each venue releases them.</p></div><div class="subpage-aside" data-reveal><span>Current run</span><strong>Dual<br />Citizenship</strong><p>Europe · October–November 2026</p></div><div class="hero-noise" aria-hidden="true"></div></section>
+      <section class="world-flight-section" aria-labelledby="world-flight-title" data-live-map-section>
+        <div class="world-flight-heading" data-reveal>
+          <div><p class="eyebrow"><span></span> Manny’s European flight path</p><h2 id="world-flight-title">Flying to<br /><em data-flight-city>London.</em></h2></div>
+          <div class="world-flight-status" aria-live="polite"><span data-flight-state>First destination</span><strong data-flight-date>October 16 &amp; 19</strong><p data-flight-venue>Top Secret Comedy Club</p></div>
+        </div>
+        <div class="live-map-shell" data-live-map data-reveal>
+          <div id="tour-map" class="tour-live-map" role="img" aria-label="Interactive political map of Call Me Manny’s European tour route"></div>
+          <div class="live-map-loading" data-map-loading><span></span>Loading European route map…</div>
+          <div class="map-flight-deck"><span data-map-phase>Live route</span><strong data-map-leg>01 / 06</strong><p data-map-route>London · landed</p></div>
+          <div class="map-terrain-badge" aria-hidden="true"><span></span>Political map</div>
+          <div class="live-map-key" aria-hidden="true"><span><i></i>Visited</span><span><i></i>Current stop</span></div>
+          <button class="map-replay" type="button" data-map-replay hidden>Replay route <span aria-hidden="true">↻</span></button>
+        </div>
+        <p class="world-flight-note">Drag to explore the map. The camera follows the plane between real geographic locations.</p>
+      </section>
       <section id="shows" class="shows-section page-shows" aria-labelledby="shows-title">
         <div class="section-heading compact" data-reveal><div><p class="eyebrow dark"><span></span> Europe · 2026</p><h2 id="shows-title">Choose a show.</h2></div><div class="section-intro"><p>Eight announced stops across London, Amsterdam, Berlin, Düsseldorf, Munich, and Paris.</p><span><b></b> Tickets and details updated as announced</span></div></div>
         <div class="show-list">
@@ -29,6 +45,6 @@
       </section>
     </main>
     <a class="sticky-tickets" href="#shows" aria-label="Jump to Call Me Manny tickets"><span>Get tickets</span><i aria-hidden="true">↓</i></a>
-    <footer><a class="wordmark footer-mark" href="/"><span>CALL ME</span><strong>MANNY</strong></a><p>Live comedy. Real stories. Zero borders.</p><p class="legal">Independent preview site · Tickets are sold by official third-party sellers · © <span id="year">2026</span></p></footer><script src="/app.js"></script>
+    <footer><a class="wordmark footer-mark" href="/"><span>CALL ME</span><strong>MANNY</strong></a><p>Live comedy. Real stories. Zero borders.</p><p class="legal">Independent preview site · Tickets are sold by official third-party sellers · © <span id="year">2026</span></p></footer><script src="/app.js?v=political-map-16"></script><script type="module" src="/tour-map.js?v=political-map-16"></script>
   </body>
 </html>
