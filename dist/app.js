@@ -43,6 +43,31 @@ if (tilt && !reducedMotion && window.matchMedia('(pointer: fine)').matches) {
   tilt.addEventListener('pointerleave', () => { tilt.style.transform = ''; });
 }
 
+const slideshow = document.querySelector('[data-slideshow]');
+if (slideshow) {
+  const slides = [...slideshow.querySelectorAll('[data-slide]')];
+  let currentSlide = 0;
+  let autoplayTimer;
+
+  const showSlide = (index) => {
+    currentSlide = (index + slides.length) % slides.length;
+    slides.forEach((slide, slideIndex) => {
+      const active = slideIndex === currentSlide;
+      slide.hidden = !active;
+      slide.classList.toggle('is-active', active);
+    });
+  };
+
+  const startAutoplay = () => {
+    window.clearInterval(autoplayTimer);
+    if (document.hidden || slides.length < 2) return;
+    autoplayTimer = window.setInterval(() => showSlide(currentSlide + 1), 4500);
+  };
+
+  document.addEventListener('visibilitychange', startAutoplay);
+  startAutoplay();
+}
+
 const stickyTickets = document.querySelector('.sticky-tickets');
 const youtubeSection = document.querySelector('.youtube-section');
 const updateStickyTickets = () => {
