@@ -68,6 +68,115 @@ if (slideshow) {
   startAutoplay();
 }
 
+const flightMap = document.querySelector('[data-flight-map]');
+if (flightMap) {
+  const stage = flightMap.querySelector('[data-flight-stage]');
+  const plane = flightMap.querySelector('[data-flight-plane]');
+  const stops = [...flightMap.querySelectorAll('[data-flight-stop]')];
+  const guidePath = flightMap.querySelector('[data-flight-guide]');
+  const livePath = flightMap.querySelector('[data-flight-live]');
+  const cityLabel = flightMap.querySelector('[data-flight-city]');
+  const dateLabel = flightMap.querySelector('[data-flight-date]');
+  const venueLabel = flightMap.querySelector('[data-flight-venue]');
+  const stateLabel = flightMap.querySelector('[data-flight-state]');
+  const points = stops.map((stop) => ({ x: Number(stop.dataset.x), y: Number(stop.dataset.y) }));
+  stops.forEach((stop, index) => {
+    stop.style.setProperty('--x', points[index].x);
+    stop.style.setProperty('--y', points[index].y);
+  });
+  let currentStop = 0;
+  let flightTimer;
+  let isFlying = false;
+  let paused = false;
+
+  const mapPoint = (point) => ({ x: point.x * 10, y: point.y * 5.2 });
+  const pathThrough = (lastIndex) => {
+    const first = mapPoint(points[0]);
+    let path = `M ${first.x} ${first.y}`;
+    for (let index = 1; index <= lastIndex; index += 1) {
+      const from = mapPoint(points[index - 1]);
+      const to = mapPoint(points[index]);
+      const curve = 34 + Math.abs(to.x - from.x) * 0.12;
+      path += ` Q ${(from.x + to.x) / 2} ${Math.min(from.y, to.y) - curve} ${to.x} ${to.y}`;
+    }
+    return path;
+  };
+
+  const placePlane = (index) => {
+    plane.style.left = `${points[index].x}%`;
+    plane.style.top = `${points[index].y}%`;
+  };
+
+  const showStop = (index, inFlight = false) => {
+    const stop = stops[index];
+    if (cityLabel) cityLabel.textContent = inFlight ? 'Somewhere new…' : `${stop.dataset.city}.`;
+    if (dateLabel) dateLabel.textContent = inFlight ? 'Destination incoming' : stop.dataset.date;
+    if (venueLabel) venueLabel.textContent = inFlight ? 'The city reveals when the plane lands.' : stop.dataset.venue;
+    if (stateLabel) stateLabel.textContent = inFlight ? 'In flight' : index === 0 ? 'First destination' : `Arrived in ${stop.dataset.city}`;
+    stops.forEach((item, itemIndex) => {
+      item.classList.toggle('is-active', !inFlight && itemIndex === index);
+      item.classList.toggle('is-complete', itemIndex < index);
+      if (!inFlight && itemIndex === index) item.classList.add('is-revealed');
+      item.setAttribute('aria-hidden', String(!item.classList.contains('is-revealed')));
+    });
+  };
+
+  const scheduleFlight = () => {
+    window.clearTimeout(flightTimer);
+    if (reducedMotion || paused || document.hidden || stops.length < 2) return;
+    flightTimer = window.setTimeout(() => flyTo((currentStop + 1) % stops.length), 1250);
+  };
+
+  const flyTo = async (nextStop) => {
+    if (isFlying || nextStop === currentStop) return;
+    isFlying = true;
+    window.clearTimeout(flightTimer);
+    stage.classList.add('is-flying');
+    showStop(nextStop, true);
+    const from = { x: stage.clientWidth * points[currentStop].x / 100, y: stage.clientHeight * points[currentStop].y / 100 };
+    const to = { x: stage.clientWidth * points[nextStop].x / 100, y: stage.clientHeight * points[nextStop].y / 100 };
+    const control = { x: (from.x + to.x) / 2, y: Math.min(from.y, to.y) - Math.max(42, Math.abs(to.x - from.x) * .25) };
+    const frames = [];
+    for (let step = 0; step <= 24; step += 1) {
+      const progress = step / 24;
+      const inverse = 1 - progress;
+      const x = inverse * inverse * from.x + 2 * inverse * progress * control.x + progress * progress * to.x;
+      const y = inverse * inverse * from.y + 2 * inverse * progress * control.y + progress * progress * to.y;
+      const nextProgress = Math.min(1, progress + .03);
+      const nextInverse = 1 - nextProgress;
+      const nextX = nextInverse * nextInverse * from.x + 2 * nextInverse * nextProgress * control.x + nextProgress * nextProgress * to.x;
+      const nextY = nextInverse * nextInverse * from.y + 2 * nextInverse * nextProgress * control.y + nextProgress * nextProgress * to.y;
+      const angle = Math.atan2(nextY - y, nextX - x) * 180 / Math.PI;
+      frames.push({ left: `${x}px`, top: `${y}px`, transform: `translate(-50%,-50%) rotate(${angle + 8}deg)` });
+    }
+    const animation = plane.animate(frames, { duration: reducedMotion ? 1 : 1800, easing: 'ease-in-out', fill: 'forwards' });
+    try { await animation.finished; } catch {}
+    currentStop = nextStop;
+    animation.cancel();
+    placePlane(currentStop);
+    livePath.setAttribute('d', pathThrough(currentStop));
+    showStop(currentStop);
+    stage.classList.remove('is-flying');
+    isFlying = false;
+    scheduleFlight();
+  };
+
+  guidePath.setAttribute('d', pathThrough(points.length - 1));
+  livePath.setAttribute('d', pathThrough(0));
+  placePlane(0);
+  showStop(0);
+  if (reducedMotion) stops.forEach((stop) => { stop.classList.add('is-revealed'); stop.setAttribute('aria-hidden', 'false'); });
+  flightMap.addEventListener('mouseenter', () => { paused = true; window.clearTimeout(flightTimer); });
+  flightMap.addEventListener('mouseleave', () => { paused = false; scheduleFlight(); });
+  flightMap.addEventListener('focusin', () => { paused = true; window.clearTimeout(flightTimer); });
+  flightMap.addEventListener('focusout', (event) => {
+    if (!flightMap.contains(event.relatedTarget)) { paused = false; scheduleFlight(); }
+  });
+  window.addEventListener('resize', () => { if (!isFlying) placePlane(currentStop); }, { passive: true });
+  document.addEventListener('visibilitychange', scheduleFlight);
+  scheduleFlight();
+}
+
 const stickyTickets = document.querySelector('.sticky-tickets');
 const youtubeSection = document.querySelector('.youtube-section');
 const updateStickyTickets = () => {
