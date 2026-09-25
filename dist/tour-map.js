@@ -178,7 +178,7 @@ if (shell) {
   try {
     map = new maplibregl.Map({
       container: 'tour-map',
-      style: 'https://tiles.openfreemap.org/styles/liberty',
+      style: 'https://tiles.openfreemap.org/styles/dark',
       center: [6.4, 50.65],
       zoom: 5.12,
       pitch: 0,
@@ -193,16 +193,36 @@ if (shell) {
     });
 
     map.on('load', () => {
+      const paint = (id, property, value) => { if (map.getLayer(id)) map.setPaintProperty(id, property, value); };
+      paint('background', 'background-color', '#080713');
+      paint('water', 'fill-color', '#08142d');
+      paint('landuse_residential', 'fill-color', '#15162a');
+      paint('landcover_wood', 'fill-color', '#102625');
+      paint('landuse_park', 'fill-color', '#14291f');
+      paint('waterway', 'line-color', '#1c4e78');
+      paint('building', 'fill-color', '#1d1934');
+      paint('highway_minor', 'line-color', '#292944');
+      paint('highway_major_inner', 'line-color', '#39345f');
+      paint('highway_motorway_inner', 'line-color', '#4a3f7d');
+      paint('boundary_state', 'line-color', '#3f4167');
+      paint('boundary_country_z0-4', 'line-color', '#9890c8');
+      paint('boundary_country_z5-', 'line-color', '#70699d');
+      ['place_country_major', 'place_country_minor', 'place_country_other', 'place_state', 'place_city_large', 'place_city', 'place_town'].forEach((id) => {
+        paint(id, 'text-color', '#f6f4ff');
+        paint(id, 'text-halo-color', '#080713');
+        paint(id, 'text-halo-width', 1.4);
+      });
+      paint('water_name', 'text-color', '#72daff');
       map.getStyle().layers
         .filter((layer) => layer.type === 'symbol' && /poi|airport|transit/i.test(layer.id))
         .forEach((layer) => map.setLayoutProperty(layer.id, 'visibility', 'none'));
       const firstSymbol = map.getStyle().layers.find((layer) => layer.type === 'symbol')?.id;
       map.addSource('tour-route', { type: 'geojson', lineMetrics: true, data: routeData });
-      map.addLayer({ id: 'tour-route-glow', type: 'line', source: 'tour-route', layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#ffffff', 'line-width': 8, 'line-opacity': .72, 'line-blur': 2 } }, firstSymbol);
-      map.addLayer({ id: 'tour-route-line', type: 'line', source: 'tour-route', layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-gradient': ['interpolate', ['linear'], ['line-progress'], 0, '#179fc5', 1, '#6242e8'], 'line-width': 3.4, 'line-opacity': .92 } }, firstSymbol);
+      map.addLayer({ id: 'tour-route-glow', type: 'line', source: 'tour-route', layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#72daff', 'line-width': 9, 'line-opacity': .2, 'line-blur': 5 } }, firstSymbol);
+      map.addLayer({ id: 'tour-route-line', type: 'line', source: 'tour-route', layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-gradient': ['interpolate', ['linear'], ['line-progress'], 0, '#72daff', 1, '#795cff'], 'line-width': 3.4, 'line-opacity': .94 } });
       map.addSource('active-flight', { type: 'geojson', data: flightData });
-      map.addLayer({ id: 'active-flight-glow', type: 'line', source: 'active-flight', layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#080713', 'line-width': 9, 'line-opacity': .7, 'line-blur': 1 } }, firstSymbol);
-      map.addLayer({ id: 'active-flight-line', type: 'line', source: 'active-flight', layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#d7ff3f', 'line-width': 4, 'line-opacity': 1 } }, firstSymbol);
+      map.addLayer({ id: 'active-flight-glow', type: 'line', source: 'active-flight', layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#d7ff3f', 'line-width': 13, 'line-opacity': .3, 'line-blur': 7 } }, firstSymbol);
+      map.addLayer({ id: 'active-flight-line', type: 'line', source: 'active-flight', layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#d7ff3f', 'line-width': 4, 'line-opacity': 1 } });
 
       markers = stops.map((stop, index) => {
         const element = document.createElement('div');

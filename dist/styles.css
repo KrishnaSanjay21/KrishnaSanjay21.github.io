@@ -112,6 +112,20 @@ footer{display:grid;grid-template-columns:auto 1fr auto;align-items:end;gap:3rem
 .live-map-shell::before{background:linear-gradient(120deg,rgba(114,218,255,.04),transparent 38%,rgba(121,92,255,.05))}
 .maplibregl-canvas{filter:none}
 .map-flight-deck,.map-terrain-badge,.live-map-key{backdrop-filter:none}
+
+/* MapLibre owns the marker's transform; animate only the dot so it cannot lag behind the map. */
+.geo-stop{transform:none;transition:opacity .35s}
+.geo-stop.is-revealed{transform:none}
+.geo-stop-dot{scale:.25;transition:scale .45s cubic-bezier(.2,.9,.2,1)}
+.geo-stop.is-revealed .geo-stop-dot{scale:1}
+
+/* Neon political-map theme: dark cartography with the site palette on top. */
+.live-map-shell{border-color:rgba(114,218,255,.34);box-shadow:0 18px 0 -9px #201a47,0 38px 70px rgba(0,0,0,.6),14px 16px 0 var(--violet)}
+.tour-live-map::after{background:radial-gradient(circle at 50% 48%,transparent 38%,rgba(8,7,19,.22) 100%),linear-gradient(180deg,rgba(8,7,19,.12),transparent 20%,transparent 76%,rgba(8,7,19,.24))}
+.live-map-shell::before{background:linear-gradient(120deg,rgba(114,218,255,.07),transparent 38%,rgba(121,92,255,.09))}
+.map-flight-deck{border-top-color:var(--acid);box-shadow:0 12px 28px rgba(0,0,0,.42),inset 0 0 0 1px rgba(255,255,255,.04)}
+.map-flight-deck span{color:var(--acid)}
+.map-terrain-badge{border-color:rgba(114,218,255,.24);color:rgba(255,255,255,.78)}
 @media(max-width:900px){.youtube-section{grid-template-columns:1fr;gap:4rem}.youtube-feature{justify-self:center;max-width:560px}}
 @media(max-width:680px){.youtube-feature{gap:2rem;padding:0}.youtube-caption{width:100%;margin:0;padding:1.4rem 0 0}.youtube-caption strong{font-size:clamp(1.45rem,6vw,2rem)}}
 
