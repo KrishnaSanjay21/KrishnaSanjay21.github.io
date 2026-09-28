@@ -126,6 +126,9 @@ footer{display:grid;grid-template-columns:auto 1fr auto;align-items:end;gap:3rem
 .map-flight-deck{border-top-color:var(--acid);box-shadow:0 12px 28px rgba(0,0,0,.42),inset 0 0 0 1px rgba(255,255,255,.04)}
 .map-flight-deck span{color:var(--acid)}
 .map-terrain-badge{border-color:rgba(114,218,255,.24);color:rgba(255,255,255,.78)}
+
+/* Single-page navigation lands below the fixed header. */
+#tour,#shows,#story,#follow{scroll-margin-top:5.5rem}
 @media(max-width:900px){.youtube-section{grid-template-columns:1fr;gap:4rem}.youtube-feature{justify-self:center;max-width:560px}}
 @media(max-width:680px){.youtube-feature{gap:2rem;padding:0}.youtube-caption{width:100%;margin:0;padding:1.4rem 0 0}.youtube-caption strong{font-size:clamp(1.45rem,6vw,2rem)}}
 
