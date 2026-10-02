@@ -131,7 +131,7 @@ footer{display:grid;grid-template-columns:auto 1fr auto;align-items:end;gap:3rem
 #tour,#shows,#story,#follow{scroll-margin-top:5.5rem}
 
 /* Keep the official tour flyer fully visible in the hero portrait. */
-.portrait-frame{aspect-ratio:1653/2339;background:#ea2a08}
+.portrait-frame{aspect-ratio:1653/2339;background:#ea2a08;clip-path:none}
 .portrait-frame img{object-fit:contain;object-position:center;filter:saturate(1.03) contrast(1.02)}
 @media(max-width:900px){.youtube-section{grid-template-columns:1fr;gap:4rem}.youtube-feature{justify-self:center;max-width:560px}}
 @media(max-width:680px){.youtube-feature{gap:2rem;padding:0}.youtube-caption{width:100%;margin:0;padding:1.4rem 0 0}.youtube-caption strong{font-size:clamp(1.45rem,6vw,2rem)}}
