@@ -20,7 +20,7 @@ if (shell) {
     { city: 'Berlin', date: 'October 26', venue: 'Cosmic Comedy Club', coordinates: [13.405, 52.52] },
     { city: 'Düsseldorf', date: 'October 27', venue: "Felix Lobrecht's Club", coordinates: [6.7735, 51.2277] },
     { city: 'Munich', date: 'October 29', venue: 'Comedy für Freunde', coordinates: [11.582, 48.1351] },
-    { city: 'Paris', date: 'November 3–8', venue: 'Choumy Comedy Club', coordinates: [2.3522, 48.8566] }
+    { city: 'Paris', date: 'November 7', venue: 'Choumy Comedy Club', coordinates: [2.3522, 48.8566] }
   ];
   const routeData = { type: 'Feature', properties: {}, geometry: { type: 'LineString', coordinates: [stops[0].coordinates, stops[0].coordinates] } };
   const flightData = { type: 'Feature', properties: {}, geometry: { type: 'LineString', coordinates: [stops[0].coordinates, stops[0].coordinates] } };
