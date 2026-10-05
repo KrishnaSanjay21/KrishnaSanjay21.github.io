@@ -16,7 +16,7 @@ if (shell) {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const stops = [
     { city: 'London', date: 'October 16 & 19', venue: 'Top Secret Comedy Club', coordinates: [-0.1276, 51.5072] },
-    { city: 'Amsterdam', date: 'October 23', venue: 'Boom Chicago · Rozentheater', coordinates: [4.9041, 52.3676] },
+    { city: 'Amsterdam', date: 'October 23 · 8:30 PM', venue: 'Boom Chicago · Rozengracht 117', coordinates: [4.9041, 52.3676] },
     { city: 'Berlin', date: 'October 26 · 8:30 PM', venue: 'Cosmic Comedy Club', coordinates: [13.405, 52.52] },
     { city: 'Düsseldorf', date: 'October 27', venue: "Felix Lobrecht's Club", coordinates: [6.7735, 51.2277] },
     { city: 'Munich', date: 'October 29 · 8:00 PM', venue: 'Comedy für Freunde Club', coordinates: [11.582, 48.1351] },
