@@ -199,4 +199,109 @@ alertForm?.addEventListener('submit', (event) => {
   window.location.href = `mailto:callmannymgmt@gmail.com?subject=${subject}&body=${body}`;
 });
 
+const META_PIXEL_ID = '1401050809751188';
+const META_CONSENT_KEY = 'call-me-manny-meta-consent-v1';
+const cookieConsent = document.querySelector('[data-cookie-consent]');
+const cookieSettings = document.querySelector('[data-cookie-settings]');
+const cookieAccept = document.querySelector('[data-cookie-accept]');
+const cookieReject = document.querySelector('[data-cookie-reject]');
+const cookieDetailsToggle = document.querySelector('[data-cookie-details-toggle]');
+const cookieDetails = document.querySelector('[data-cookie-details]');
+const cookieCurrent = document.querySelector('[data-cookie-current]');
+let metaPixelInitialized = false;
+
+const readMetaConsent = () => {
+  try { return window.localStorage.getItem(META_CONSENT_KEY); } catch { return null; }
+};
+
+const saveMetaConsent = (choice) => {
+  try { window.localStorage.setItem(META_CONSENT_KEY, choice); } catch {}
+};
+
+const describeMetaConsent = (choice) => {
+  if (!cookieCurrent) return;
+  cookieCurrent.textContent = choice === 'accepted'
+    ? 'Current choice: Meta advertising measurement is allowed.'
+    : choice === 'rejected'
+      ? 'Current choice: Meta advertising measurement is off.'
+      : 'No advertising choice has been saved yet.';
+};
+
+const showCookieConsent = () => {
+  if (!cookieConsent) return;
+  describeMetaConsent(readMetaConsent());
+  cookieConsent.hidden = false;
+  document.body.classList.add('cookie-choice-open');
+};
+
+const hideCookieConsent = () => {
+  if (!cookieConsent) return;
+  cookieConsent.hidden = true;
+  document.body.classList.remove('cookie-choice-open');
+};
+
+const loadMetaPixel = () => {
+  if (metaPixelInitialized && window.fbq) {
+    window.fbq('consent', 'grant');
+    window.fbq('track', 'PageView');
+    return;
+  }
+
+  /* Meta is loaded only after the visitor explicitly accepts advertising tracking. */
+  const fbq = function (...args) {
+    if (fbq.callMethod) fbq.callMethod(...args);
+    else fbq.queue.push(args);
+  };
+  window.fbq = fbq;
+  if (!window._fbq) window._fbq = fbq;
+  fbq.push = fbq;
+  fbq.loaded = true;
+  fbq.version = '2.0';
+  fbq.queue = [];
+
+  const script = document.createElement('script');
+  script.async = true;
+  script.src = 'https://connect.facebook.net/en_US/fbevents.js';
+  document.head.appendChild(script);
+
+  window.fbq('init', META_PIXEL_ID);
+  window.fbq('consent', 'grant');
+  window.fbq('track', 'PageView');
+  metaPixelInitialized = true;
+};
+
+const revokeMetaPixel = () => {
+  if (window.fbq) window.fbq('consent', 'revoke');
+  ['_fbp', '_fbc'].forEach((name) => {
+    document.cookie = `${name}=; Max-Age=0; path=/; SameSite=Lax`;
+  });
+};
+
+cookieAccept?.addEventListener('click', () => {
+  saveMetaConsent('accepted');
+  describeMetaConsent('accepted');
+  loadMetaPixel();
+  hideCookieConsent();
+});
+
+cookieReject?.addEventListener('click', () => {
+  saveMetaConsent('rejected');
+  describeMetaConsent('rejected');
+  revokeMetaPixel();
+  hideCookieConsent();
+});
+
+cookieSettings?.addEventListener('click', showCookieConsent);
+
+cookieDetailsToggle?.addEventListener('click', () => {
+  const expanded = cookieDetailsToggle.getAttribute('aria-expanded') === 'true';
+  cookieDetailsToggle.setAttribute('aria-expanded', String(!expanded));
+  if (cookieDetails) cookieDetails.hidden = expanded;
+});
+
+const savedMetaConsent = readMetaConsent();
+if (savedMetaConsent === 'accepted') loadMetaPixel();
+else if (!savedMetaConsent) showCookieConsent();
+describeMetaConsent(savedMetaConsent);
+
 document.getElementById('year').textContent = new Date().getFullYear();
