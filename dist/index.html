@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@6.11.2/dist/maplibre-gl.css" />
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="preload" as="image" href="/manny-dual-citizenshit-euro-tour.jpg" />
-    <link rel="stylesheet" href="/styles.css?v=new-tour-poster-30" />
+    <link rel="stylesheet" href="/styles.css?v=meta-consent-31" />
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Call Me Manny","alternateName":"Emmanuel Carre","jobTitle":"Stand-up comedian","sameAs":["https://www.instagram.com/callmemannyirl/","https://www.tiktok.com/@callme_manny","https://www.snapchat.com/@callmemannyirl"]}</script>
   </head>
   <body>
@@ -174,8 +174,27 @@
 
     <a class="sticky-tickets" href="#shows" aria-label="Jump to Call Me Manny tour dates and tickets"><span>Get tickets</span><i aria-hidden="true">↓</i></a>
 
-    <footer><a class="wordmark footer-mark" href="/" aria-label="Call Me Manny home"><span>CALL ME</span><strong>MANNY</strong></a><p>Live comedy. Real stories. Zero borders.</p><p class="legal">Independent preview site · Tickets are sold by official third-party sellers · © <span id="year">2026</span></p></footer>
-    <script src="/app.js?v=story-flow-25"></script>
+    <footer><a class="wordmark footer-mark" href="/" aria-label="Call Me Manny home"><span>CALL ME</span><strong>MANNY</strong></a><p>Live comedy. Real stories. Zero borders.</p><p class="legal">Independent preview site · Tickets are sold by official third-party sellers · © <span id="year">2026</span> · <button class="cookie-settings-link" type="button" data-cookie-settings>Cookie settings</button></p></footer>
+
+    <section class="cookie-consent" data-cookie-consent hidden aria-labelledby="cookie-consent-title">
+      <div class="cookie-consent-copy">
+        <p class="cookie-kicker">Privacy · Your call</p>
+        <h2 id="cookie-consent-title">Can Meta measure this visit?</h2>
+        <p>We use the Meta Pixel to measure Facebook and Instagram advertising. It stays off unless you accept advertising tracking.</p>
+        <button class="cookie-details-toggle" type="button" data-cookie-details-toggle aria-expanded="false" aria-controls="cookie-details">Privacy details</button>
+        <div class="cookie-details" id="cookie-details" data-cookie-details hidden>
+          <p>If accepted, this page sends a PageView event to Meta Pixel <strong>1401050809751188</strong>. Meta may receive browser, device, cookie, and page-visit information and may associate it with a Facebook or Instagram account. You can change your choice anytime using “Cookie settings” in the footer.</p>
+          <a href="https://www.facebook.com/privacy/policy/" target="_blank" rel="noopener noreferrer">Read Meta’s privacy policy <span aria-hidden="true">↗</span></a>
+        </div>
+        <p class="cookie-current-choice" data-cookie-current aria-live="polite"></p>
+      </div>
+      <div class="cookie-consent-actions">
+        <button class="cookie-reject" type="button" data-cookie-reject>Reject</button>
+        <button class="cookie-accept" type="button" data-cookie-accept>Accept advertising</button>
+      </div>
+    </section>
+
+    <script src="/app.js?v=meta-consent-31"></script>
     <script type="module" src="/tour-map.js?v=amsterdam-29"></script>
   </body>
 </html>
