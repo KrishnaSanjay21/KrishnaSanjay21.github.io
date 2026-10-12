@@ -201,6 +201,8 @@ alertForm?.addEventListener('submit', (event) => {
 
 const META_PIXEL_ID = '1401050809751188';
 const META_CONSENT_KEY = 'call-me-manny-meta-consent-v1';
+const CAMPAIGN_SESSION_KEY = 'call-me-manny-campaign-v1';
+const CAMPAIGN_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid'];
 const cookieConsent = document.querySelector('[data-cookie-consent]');
 const cookieSettings = document.querySelector('[data-cookie-settings]');
 const cookieAccept = document.querySelector('[data-cookie-accept]');
@@ -209,6 +211,96 @@ const cookieDetailsToggle = document.querySelector('[data-cookie-details-toggle]
 const cookieDetails = document.querySelector('[data-cookie-details]');
 const cookieCurrent = document.querySelector('[data-cookie-current]');
 let metaPixelInitialized = false;
+let metaPageViewTracked = false;
+
+window.dataLayer = window.dataLayer || [];
+
+const readSessionJson = (key) => {
+  try { return JSON.parse(window.sessionStorage.getItem(key) || 'null'); } catch { return null; }
+};
+
+const writeSessionJson = (key, value) => {
+  try { window.sessionStorage.setItem(key, JSON.stringify(value)); } catch {}
+};
+
+const captureCampaign = () => {
+  const url = new URL(window.location.href);
+  const previous = readSessionJson(CAMPAIGN_SESSION_KEY) || {};
+  const campaign = { ...previous };
+  CAMPAIGN_KEYS.forEach((key) => {
+    const value = url.searchParams.get(key);
+    if (value) campaign[key] = value.slice(0, 250);
+  });
+
+  if (!campaign.landing_page) campaign.landing_page = `${url.origin}${url.pathname}`;
+  if (!campaign.referrer && document.referrer) {
+    try { campaign.referrer = new URL(document.referrer).hostname; } catch {}
+  }
+  if (!campaign.traffic_source) {
+    campaign.traffic_source = campaign.utm_source || (campaign.fbclid ? 'meta' : campaign.referrer || 'direct');
+  }
+  writeSessionJson(CAMPAIGN_SESSION_KEY, campaign);
+  return campaign;
+};
+
+const campaignContext = captureCampaign();
+
+const ticketPayload = (link) => ({
+  content_name: 'Call Me Manny — Dual Citizenshit',
+  content_type: 'product',
+  content_ids: [link.dataset.eventId],
+  city: link.dataset.city,
+  venue: link.dataset.venue,
+  show_date: link.dataset.showDate,
+  checkout_provider: link.dataset.checkoutProvider,
+  currency: link.dataset.currency,
+  value: Number(link.dataset.price || 0),
+  ...campaignContext,
+});
+
+const sendFunnelEvent = (dataLayerEvent, metaEvent, payload, useStandardMetaEvent = false) => {
+  if (readMetaConsent() !== 'accepted') return;
+  window.dataLayer.push({ event: dataLayerEvent, ...payload });
+  if (!window.fbq) return;
+  window.fbq(useStandardMetaEvent ? 'track' : 'trackCustom', metaEvent, payload);
+};
+
+const prepareTicketLinks = () => {
+  document.querySelectorAll('[data-ticket-link]').forEach((link) => {
+    if (link.dataset.trackingReady === 'true') return;
+    link.dataset.trackingReady = 'true';
+    try {
+      const checkoutUrl = new URL(link.href);
+      CAMPAIGN_KEYS.forEach((key) => {
+        if (campaignContext[key]) checkoutUrl.searchParams.set(key, campaignContext[key]);
+      });
+      link.href = checkoutUrl.toString();
+    } catch {}
+
+    link.addEventListener('click', () => {
+      const payload = ticketPayload(link);
+      sendFunnelEvent('ticket_click', 'TicketClick', {
+        ...payload,
+        link_url: link.href,
+      });
+    }, { capture: true });
+  });
+};
+
+prepareTicketLinks();
+
+const showCards = document.querySelectorAll('[data-show-card]');
+if (showCards.length && 'IntersectionObserver' in window) {
+  const showViewObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      const link = entry.target.querySelector('[data-ticket-link]');
+      if (link) sendFunnelEvent('view_show', 'ViewContent', ticketPayload(link), true);
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.55 });
+  showCards.forEach((card) => showViewObserver.observe(card));
+}
 
 const readMetaConsent = () => {
   try { return window.localStorage.getItem(META_CONSENT_KEY); } catch { return null; }
@@ -243,7 +335,11 @@ const hideCookieConsent = () => {
 const loadMetaPixel = () => {
   if (metaPixelInitialized && window.fbq) {
     window.fbq('consent', 'grant');
-    window.fbq('track', 'PageView');
+    if (!metaPageViewTracked) {
+      window.dataLayer.push({ event: 'page_view', ...campaignContext });
+      window.fbq('track', 'PageView', campaignContext);
+      metaPageViewTracked = true;
+    }
     return;
   }
 
@@ -266,7 +362,9 @@ const loadMetaPixel = () => {
 
   window.fbq('init', META_PIXEL_ID);
   window.fbq('consent', 'grant');
-  window.fbq('track', 'PageView');
+  window.dataLayer.push({ event: 'page_view', ...campaignContext });
+  window.fbq('track', 'PageView', campaignContext);
+  metaPageViewTracked = true;
   metaPixelInitialized = true;
 };
 
