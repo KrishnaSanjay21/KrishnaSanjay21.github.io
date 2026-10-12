@@ -245,18 +245,22 @@ const captureCampaign = () => {
 
 const campaignContext = captureCampaign();
 
-const ticketPayload = (link) => ({
-  content_name: 'Call Me Manny — Dual Citizenshit',
-  content_type: 'product',
-  content_ids: [link.dataset.eventId],
-  city: link.dataset.city,
-  venue: link.dataset.venue,
-  show_date: link.dataset.showDate,
-  checkout_provider: link.dataset.checkoutProvider,
-  currency: link.dataset.currency,
-  value: Number(link.dataset.price || 0),
-  ...campaignContext,
-});
+const ticketPayload = (link) => {
+  const payload = {
+    content_name: 'Call Me Manny — Dual Citizenshit',
+    content_type: 'product',
+    content_ids: [link.dataset.eventId],
+    city: link.dataset.city,
+    venue: link.dataset.venue,
+    show_date: link.dataset.showDate,
+    checkout_provider: link.dataset.checkoutProvider,
+    ...campaignContext,
+  };
+
+  if (link.dataset.currency) payload.currency = link.dataset.currency;
+  if (link.dataset.price) payload.value = Number(link.dataset.price);
+  return payload;
+};
 
 const sendFunnelEvent = (dataLayerEvent, metaEvent, payload, useStandardMetaEvent = false) => {
   if (readMetaConsent() !== 'accepted') return;
