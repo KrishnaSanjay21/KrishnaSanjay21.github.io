@@ -23,7 +23,7 @@ A fast, accessible static portfolio for data and machine learning engineer Krish
 - [RxGuard](https://rxguard-pbm-claims-analytics-dashboard-jjemrsisptbofgdghqllgr.streamlit.app/client_reporting) - synthetic PBM claims analytics and governed client reporting
 - [ClientPulse](https://clientpulse-vxg5ybjezfv7yfmjxmhpmd.streamlit.app/client_pitch) - multi-client KPI dashboard with internal and client-facing views
 
-Eleven public projects retain dedicated, evidence-based case studies. A new recent-systems section adds the Restaurant Operations Data Platform, ERPNext Order-to-Cash Governance, SEC Financial Data Warehouse, CMS Hospital Benchmarking, Airline Disruption Prediction, and Medicare Part D Analytics. Real interface captures are used where a verified product or dashboard exists; every claim is scoped to the evidence available in its repository.
+Twelve public projects retain dedicated, evidence-based case studies. The recent-systems section now leads with the Manufacturing Quality Control Tower and also includes the Restaurant Operations Data Platform, ERPNext Order-to-Cash Governance, SEC Financial Data Warehouse, CMS Hospital Benchmarking, Airline Disruption Prediction, and Medicare Part D Analytics. Real interface captures are used where a verified product or dashboard exists; every claim is scoped to the evidence available in its repository.
 
 ## Local development
 
@@ -39,6 +39,7 @@ Then open `http://localhost:4173`.
 
 ```text
 projects/
+|-- manufacturing-quality-control-tower.html
 |-- rxguard.html
 |-- clientpulse.html
 |-- yolov11-int8.html

@@ -121,7 +121,7 @@
 
     <section class="metrics" aria-label="Selected project evidence">
       <div class="shell metric-grid">
-        <div><strong>577K</strong><span>Public API rows · restaurant platform</span></div>
+        <div><strong>924K</strong><span>Historian-style readings · manufacturing quality</span></div>
         <div><strong>1.07M</strong><span>Retail rows · ERP migration audit</span></div>
         <div><strong>5,411</strong><span>Hospitals · quality and cost benchmark</span></div>
         <div><strong>2</strong><span>Peer-reviewed publications</span></div>
@@ -139,6 +139,23 @@
 
       <div class="recent-grid">
         <article class="recent-card recent-card-lead">
+          <a class="recent-visual" href="projects/manufacturing-quality-control-tower.html" aria-label="Read the Manufacturing Quality Control Tower case study">
+            <img src="assets/images/projects/manufacturing-quality-summary.png" alt="Manufacturing quality control tower summary showing first-pass yield, defect rate, production volume, missing-signal rate, control alerts, and reconciliation results" width="1600" height="900" loading="lazy">
+          </a>
+          <div class="recent-content">
+            <div class="recent-meta"><span>Manufacturing analytics</span><span>Real UCI data</span></div>
+            <h3>Manufacturing Quality Control Tower</h3>
+            <p>Historian-style modeling of the UCI SECOM semiconductor dataset with governed PostgreSQL tables, statistical investigation, control alerts, a source-controlled Power BI project, and auditable reconciliation.</p>
+            <ul class="evidence-row" aria-label="Project evidence">
+              <li><strong>924,530</strong><span>sensor readings</span></li>
+              <li><strong>93.36%</strong><span>first-pass yield</span></li>
+              <li><strong>0.773</strong><span>holdout ROC AUC</span></li>
+            </ul>
+            <div class="recent-footer"><span class="mono">Python · PostgreSQL · Power BI · DMAIC</span><a href="projects/manufacturing-quality-control-tower.html">Case study →</a></div>
+          </div>
+        </article>
+
+        <article class="recent-card">
           <a class="recent-visual" href="https://github.com/KrishnaSanjay21/restaurant-operations-data-platform" target="_blank" rel="noopener" aria-label="Open the Restaurant Operations Data Platform repository">
             <img src="assets/images/projects/restaurant-operations-dashboard.png" alt="Restaurant Operations executive dashboard with risk, inspection, violation, and complaint KPIs" width="1600" height="900" loading="lazy">
           </a>
@@ -172,25 +189,10 @@
           </div>
         </article>
 
-        <article class="recent-card">
-          <a class="recent-visual" href="https://github.com/KrishnaSanjay21/sec-financial-data-warehouse-risk-monitor" target="_blank" rel="noopener" aria-label="Open the SEC Financial Data Warehouse repository">
-            <img src="assets/images/projects/sec-risk-monitor.png" alt="SEC Financial Data Warehouse architecture and risk-monitoring overview" width="1600" height="900" loading="lazy">
-          </a>
-          <div class="recent-content">
-            <div class="recent-meta"><span>Warehouse engineering</span><span>SEC EDGAR APIs</span></div>
-            <h3>SEC Financial Data Warehouse</h3>
-            <p>Incremental EDGAR ingestion and PostgreSQL dimensional modeling with filing lineage, restatement handling, accounting controls, and Power BI-ready risk marts.</p>
-            <ul class="evidence-row" aria-label="Project evidence">
-              <li><strong>100–500</strong><span>company scale</span></li>
-              <li><strong>Idempotent</strong><span>batch upserts</span></li>
-              <li><strong>Auditable</strong><span>raw lineage</span></li>
-            </ul>
-            <div class="recent-footer"><span class="mono">PostgreSQL · APIs · Docker · Power BI</span><a href="https://github.com/KrishnaSanjay21/sec-financial-data-warehouse-risk-monitor" target="_blank" rel="noopener">Repository ↗</a></div>
-          </div>
-        </article>
       </div>
 
       <div class="recent-index" aria-label="Additional recent projects">
+        <a href="https://github.com/KrishnaSanjay21/sec-financial-data-warehouse-risk-monitor" target="_blank" rel="noopener"><span>SEC Financial Data Warehouse</span><strong>EDGAR APIs · idempotent ingestion · filing lineage</strong><em>View ↗</em></a>
         <a href="https://github.com/KrishnaSanjay21/cms-hospital-quality-cost-benchmarking" target="_blank" rel="noopener"><span>CMS Hospital Benchmarking</span><strong>5,411 hospitals · 0 critical DQ failures</strong><em>View ↗</em></a>
         <a href="https://github.com/KrishnaSanjay21/airline-delay-cancellation-prediction" target="_blank" rel="noopener"><span>Airline Disruption Prediction</span><strong>BTS + NOAA · chronological validation</strong><em>View ↗</em></a>
         <a href="https://github.com/KrishnaSanjay21/medicare-part-d-drug-cost-analytics" target="_blank" rel="noopener"><span>Medicare Part D Analytics</span><strong>Published CMS data · Streamlit dashboard</strong><em>View ↗</em></a>
