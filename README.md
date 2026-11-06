@@ -2,7 +2,7 @@
 
 A fast, accessible static portfolio for data and machine learning engineer Krishna Sanjay Vaddi, spanning reliable data platforms, governed analytics, and deployable AI systems.
 
-**Live site:** [krishnasanjay21.github.io/portfolio](https://krishnasanjay21.github.io/portfolio/)
+**Live site:** [krishnasanjay21.github.io](https://krishnasanjay21.github.io/)
 
 ## What the site highlights
 
