@@ -6,14 +6,14 @@
   <meta name="description" content="Case study: ShopGenie-E, a multi-agent shopping decision-support application with live retrieval and explainable ranking.">
   <meta name="theme-color" content="#0b0f17">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="ShopGenie-E Multi-Agent Shopping Assistant — Krishna Vaddi">
+  <meta property="og:title" content="ShopGenie-E Multi-Agent Shopping Assistant - Krishna Vaddi">
   <meta property="og:description" content="Intent analysis, live product retrieval, requirements-based ranking, and an interactive comparison dashboard.">
   <meta property="og:url" content="https://krishnasanjay21.github.io/projects/shopgenie.html">
   <meta property="og:image" content="https://krishnasanjay21.github.io/assets/images/projects/shopgenie-interface.png">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="canonical" href="https://krishnasanjay21.github.io/projects/shopgenie.html">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><rect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%230b0f17%22/><path d=%22M18 14v36M46 14 28 32l18 18%22 fill=%22none%22 stroke=%22%23f5a742%22 stroke-width=%226%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>">
-  <title>ShopGenie-E Multi-Agent Shopping Assistant — Krishna Vaddi</title>
+  <title>ShopGenie-E Multi-Agent Shopping Assistant - Krishna Vaddi</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/custom.css">
@@ -37,7 +37,7 @@
         <div><p class="section-kicker">Multi-agent product · Decision support</p><h1>ShopGenie-E</h1><p class="case-deck">A LangGraph shopping workflow that turns intent, use case, and budget into live product research, a requirements-based Genie Score, and a structured comparison dashboard.</p></div>
         <div class="case-actions"><a class="button button-primary" href="https://shopgenie-38esar44rpqhmaz9r3it3b.streamlit.app/" target="_blank" rel="noopener">Open live demo ↗</a><a class="button button-ghost" href="https://github.com/KrishnaSanjay21/shopgenie" target="_blank" rel="noopener">View source ↗</a></div>
       </div>
-      <div class="case-stats" aria-label="Project evidence"><div><strong>5</strong><span>Workflow nodes from intent through evaluation</span></div><div><strong>0–10</strong><span>Requirements-based Genie Score</span></div><div><strong>Top 3</strong><span>Powerhouse, balanced, and budget options</span></div><div><strong>Live</strong><span>Tavily product and image retrieval</span></div></div>
+      <div class="case-stats" aria-label="Project evidence"><div><strong>5</strong><span>Workflow nodes from intent through evaluation</span></div><div><strong>0-10</strong><span>Requirements-based Genie Score</span></div><div><strong>Top 3</strong><span>Powerhouse, balanced, and budget options</span></div><div><strong>Live</strong><span>Tavily product and image retrieval</span></div></div>
     </section>
 
     <figure class="case-visual shell"><div class="case-visual-frame has-product-shot" data-visual-label="ShopGenie-E / agent workspace"><img src="../assets/images/projects/shopgenie-interface.png" alt="ShopGenie-E interface with agent monitor, brand panel, and constraint-oriented shopping prompt" width="1280" height="720"></div><figcaption>The live workspace keeps agent health visible beside a focused, constraint-oriented shopping prompt.</figcaption></figure>
@@ -50,7 +50,7 @@
           <ol class="case-flow">
             <li><strong>Intent and context manager</strong><p>Classifies greetings, recognizes a buying request, extracts the use case, and requests a budget when the constraint is missing.</p></li>
             <li><strong>Retrieval agent</strong><p>Uses Tavily to search product and retailer sources for up to eight current candidates and review signals.</p></li>
-            <li><strong>Reasoner agent</strong><p>Groq-hosted Llama 3.3 70B converts the evidence into three structured options with prices, fit summaries, specifications, and 0–10 scores.</p></li>
+            <li><strong>Reasoner agent</strong><p>Groq-hosted Llama 3.3 70B converts the evidence into three structured options with prices, fit summaries, specifications, and 0-10 scores.</p></li>
             <li><strong>Image fetcher</strong><p>Runs a targeted image search for each selected product and attaches imagery to the structured recommendation.</p></li>
             <li><strong>Evaluator</strong><p>Checks that the final recommendation parses as JSON and routes malformed output back through retrieval.</p></li>
           </ol>
@@ -58,7 +58,7 @@
 
         <section><p class="section-kicker">Interface design</p><h2>Agent output becomes an explorable comparison, not a chat transcript.</h2><p>Streamlit renders the top three products as Powerhouse, Balanced, and Budget cards. Pandas builds the comparison table, while selection state opens a deep dive containing the fit rationale, specifications, benefits, gallery, dealbreaker, and purchase link.</p><h3>Conversation memory</h3><p>The most recent messages are passed back into the intent stage so a shopper can state their use case, product category, and budget across separate turns.</p></section>
 
-        <section><p class="section-kicker">Limits &amp; hardening</p><h2>Fresh web data creates useful—and testable—failure modes.</h2><ul><li>Replace JSON parse-only evaluation with a typed schema that validates required fields, score bounds, URLs, and evidence provenance.</li><li>Cap evaluator retries so malformed model output cannot create an unbounded retrieval loop.</li><li>Attach source citations and freshness timestamps to each product claim and price.</li><li>Add offline fixtures and agent-level evaluations for intent routing, budget extraction, ranking stability, and dealbreaker quality.</li></ul><div class="case-callout"><strong>Next milestone</strong><p>Make ranking evidence traceable from each displayed claim back to the retrieved source, then evaluate recommendation consistency over a fixed shopping-query set.</p></div></section>
+        <section><p class="section-kicker">Limits &amp; hardening</p><h2>Fresh web data creates useful-and testable-failure modes.</h2><ul><li>Replace JSON parse-only evaluation with a typed schema that validates required fields, score bounds, URLs, and evidence provenance.</li><li>Cap evaluator retries so malformed model output cannot create an unbounded retrieval loop.</li><li>Attach source citations and freshness timestamps to each product claim and price.</li><li>Add offline fixtures and agent-level evaluations for intent routing, budget extraction, ranking stability, and dealbreaker quality.</li></ul><div class="case-callout"><strong>Next milestone</strong><p>Make ranking evidence traceable from each displayed claim back to the retrieved source, then evaluate recommendation consistency over a fixed shopping-query set.</p></div></section>
       </article>
 
       <aside class="case-sidebar" aria-label="Project summary">
